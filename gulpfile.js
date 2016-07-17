@@ -19,6 +19,9 @@ var errorHandler = function (err) {
 gulp.task('copy', function () {
     return merge(
         gulp.src([
+            'node_modules/jquery/dist/jquery.js'
+        ]).pipe(gulp.dest('public/js')),
+        gulp.src([
             'node_modules/material-design-icons/iconfont/MaterialIcons-Regular.ttf',
             'node_modules/material-design-icons/iconfont/MaterialIcons-Regular.eot',
             'node_modules/material-design-icons/iconfont/MaterialIcons-Regular.woff',
