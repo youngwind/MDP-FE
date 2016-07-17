@@ -9,10 +9,7 @@ var app = new Vue({
         msg: "youngwind",
         selected: '',
         options: [],
-        items: [
-            {message: 'Foo'},
-            {message: 'Bar'}
-        ]
+        items: []
     },
     methods: {
         addComponent: function () {
@@ -38,7 +35,7 @@ var app = new Vue({
         uploadRelease: function () {
             var formData = new FormData($("#frmUploadFile")[0]);
             $.ajax({
-                url: config.api + '/release/upload',
+                url: config.api + '/release/upload?componentId=' + app.selected,
                 type: 'POST',
                 data: formData,
                 async: false,
@@ -47,13 +44,26 @@ var app = new Vue({
                 processData: false,
             }).done(function (res) {
                 console.log(res);
+                getReleaseByComponentId(app.selected);
             });
         }
     }
 });
 
+app.$watch('selected', function (val) {
+    getReleaseByComponentId(val);
+});
+
 init();
 
+
+function getReleaseByComponentId(componentId) {
+    $.ajax({
+        url: config.api + '/release/all?componentId=' + componentId
+    }).done(function (res) {
+        app.items = res.data;
+    })
+}
 
 function init() {
 
@@ -62,6 +72,10 @@ function init() {
     }).done(function (res) {
         app.options = res.data;
         app.selected = res.data[0].id;
+
+        getReleaseByComponentId(app.selected);
+
     });
+
 }
 
