@@ -59,7 +59,7 @@ init();
 
 function getReleaseByComponentId(componentId) {
     $.ajax({
-        url: config.api + '/release/all?componentId=' + componentId
+        url: config.api + '/release/' + componentId
     }).done(function (res) {
         app.items = res.data;
     })
@@ -68,7 +68,7 @@ function getReleaseByComponentId(componentId) {
 function init() {
 
     $.ajax({
-        url: config.api + '/component/all',
+        url: config.api + '/component/all'
     }).done(function (res) {
         app.options = res.data;
         app.selected = res.data[0].id;
